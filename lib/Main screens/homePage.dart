@@ -39,7 +39,7 @@ class _homePageState extends State<homePage> {
             ),
             ),
         leading: Image.asset(
-          'assets/logo_bianco.png', // Path to your logo
+          'assets/logo_bianco.png',
           height: 30,
         ),
 

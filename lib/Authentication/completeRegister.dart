@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'firebase_auth_service.dart';
+import 'package:wefly/model/firebase_auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,7 +10,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:wefly/model/User.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:wefly/homePage.dart';
+import 'package:wefly/Main screens/homePage.dart';
 
 class LoadingScreen extends StatelessWidget {
   @override
@@ -240,10 +240,10 @@ class _completeRegisterState extends State<completeRegister> {
                             Text(
                             "Camera",
                             style: GoogleFonts.dmSerifText(
-          textStyle: TextStyle(color: Colors.black),
-          fontWeight: FontWeight.bold,
+                            textStyle: TextStyle(color: Colors.black),
+                            fontWeight: FontWeight.bold,
 
-          ))
+                          ))
                           ],
                         ),
                       ),

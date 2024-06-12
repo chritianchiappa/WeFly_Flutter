@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'firebase_auth_service.dart';
+import 'package:wefly/model/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wefly/homePage.dart';
+import 'package:wefly/Main screens/homePage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -155,12 +155,15 @@ class _SignInState extends State<SignIn> {
 
     if (user != null) {
       Navigator.pushAndRemoveUntil(
+        //navigo verso la homePage eliminando dallo
+        // stack tutti i widget in modo che se torno indietro dalla home page
+        // non ritorno alla schermata di accesso
         context,
         MaterialPageRoute(builder: (context) => const homePage()),
             (route) => false,
       );
     } else {
-      showToastMessage("Errore");
+      showToastMessage("Email o password non validi");
     }
   }
 

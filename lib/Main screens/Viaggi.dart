@@ -30,7 +30,7 @@ class _ViaggiScreenState extends State<ViaggiScreen> {
     _initializeFirebase();
   }
 
-  void _initializeFirebase() async {
+  void _initializeFirebase() async { //qua inizializzo tutta la parte di firebase
     database = FirebaseDatabase.instanceFor(
       app: Firebase.app(),
       databaseURL: "https://weflyflutter-default-rtdb.europe-west1.firebasedatabase.app",
@@ -46,7 +46,7 @@ class _ViaggiScreenState extends State<ViaggiScreen> {
     print(stiliViaggioUtente);
   }
 
-  Future<String> _getImageUrl(String viaggioUid) async {
+  Future<String> _getImageUrl(String viaggioUid) async { //qua prendo l'url dell'immagine del viaggio dallo storage
     try {
       final ref = FirebaseStorage.instance.ref().child('travels_images/$viaggioUid.jpg');
       String url = await ref.getDownloadURL();
@@ -63,10 +63,12 @@ class _ViaggiScreenState extends State<ViaggiScreen> {
     if (viaggio['Budget'] > _selectedBudget) {
       return false;
     }
-
+    //Non mostro i viaggi in cui l'utente gia partecipa
     if(List.from(viaggio['Partecipanti']).contains(userId)){
       return false;
     }
+    //Non mostro i viaggi in cui il numero di partecipanti è maggiore o uguale
+    //al numero massimo di partecipanti
     if(List.from(viaggio['Partecipanti']).length>=viaggio['Max partecipanti']){
       return false;
     }
@@ -200,7 +202,7 @@ class _ViaggiScreenState extends State<ViaggiScreen> {
     );
   }
 
-  void _showFilterDialog() {
+  void _showFilterDialog() { //mostro il dialog con i filtri
     showDialog(
       context: context,
       builder: (BuildContext context) {

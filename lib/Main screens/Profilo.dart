@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wefly/Autenticazione/firebase_auth_service.dart';
+import 'package:wefly/model/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -93,11 +93,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return url;
     } catch (e) {
       print('Errore durante il caricamento dell\'immagine del profilo: $e');
-      return ''; // Nel caso in cui si verifichi un errore, restituisci una stringa vuota
+      return ''; // Nel caso in cui si verifichi un errore, restituisce una stringa vuota
     }
   }
   Widget _buildViaggioTile(Map<String, dynamic> viaggio) {
-    // Ensure all required fields are available and provide default values if necessary
+    // Metto dei valori di default se magari alcuni campi non ci dovessero essere
     String nome = viaggio['Titolo'] ?? 'ND';
     String citta = viaggio['Città'] ?? 'ND';
     String nazione = viaggio['Nazione'] ?? 'ND';
@@ -112,8 +112,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        border: Border.all(color: Color(0xff7480FB)), // Definisci il bordo
-        borderRadius: BorderRadius.circular(10), // Definisci i bordi arrotondati
+        border: Border.all(color: Color(0xff7480FB)),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
         title: Text(nome),
@@ -130,13 +130,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _sendWhatsapp(String phoneNumber) async {
     print(phoneNumber);
     try {
-      // Formatto il numero di telefono
+      // Formatto il numero di telefono in modo da lasciare solo numeri
       String formattedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
       print(formattedPhoneNumber);
-      // URL di deep linking di WhatsApp
+      // URL di WhatsApp
       var url='https://wa.me/$formattedPhoneNumber?text=Ciao';
 
-      // Provo ad aprire WhatsApp con l'URL di deep linking
+      // Provo ad aprire WhatsApp tramite url
       if (await canLaunch(url)) {
         await launch(url);
       } else {
@@ -201,6 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         _auth.signOut();
                         Navigator.pushReplacementNamed(context, '/registerScreen');
+                        //quando clicco sul bottone per uscire dall'account naviga l'utente verso la parte di registrazione
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff7480FB),

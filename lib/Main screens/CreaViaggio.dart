@@ -356,7 +356,7 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
     }
     Navigator.of(context).pop();
   }
-  // Carica l'immagine selezionata sullo storage di Firebase
+
   Future<bool> _creaViaggio() async {
     try {
       String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -371,7 +371,7 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
 
       String imagePath = 'travels_images/$viaggioUid.jpg';
       final ref = FirebaseStorage.instance.ref().child(imagePath);
-
+      //Crica i dati del viaggio sul database
       await nuovoViaggioRef.set({
         'Titolo': _nomeController.text,
         'Budget': int.parse(_budgetController.text),
@@ -385,6 +385,7 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
         'Partecipanti': [userId],
       });
       print("caricati dati viaggio");
+      // Carica l'immagine selezionata sullo storage di Firebase
       uploadTask = ref.putFile(selectedIMage!);
       final snapshot = await uploadTask!.whenComplete(() {});
       return true;
@@ -397,7 +398,7 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
 
 
   void _check() async{
-      //controlla se tutti i campi sono compleatati
+      //Controlla se tutti i campi sono completati
       if (_nomeController.text.isEmpty ||
           _budgetController.text.isEmpty ||
           _maxPartecipantiController.text.isEmpty ||
@@ -413,9 +414,9 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
         showToastMessage("Scegli un immagine per il viaggio");
         return;
       }
-      //se sono completati:
+      //Se sono completati:
       setState(() {
-        _isLoading = true; // Attiva lo stato di caricamento quando il caricamento è completato
+        _isLoading = true; // Attiva lo stato di caricamento
       });
       bool success = await _creaViaggio();
 
@@ -446,10 +447,10 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
   Future<void> _loadCSV() async {
     try {
       final _rawData = await rootBundle.loadString("assets/citiesNations.csv");
-      // Usa `compute` per eseguire il parsing del CSV in un isolato separato
+      // Uso `compute` per eseguire il parsing del CSV in un isolato separato
       Map<String, List<String>> dataMap = await compute(_parseCSV, _rawData);
 
-      // Estrai le nazioni univoche
+      // Estrae le nazioni univoche
       List<String> uniqueCountries = dataMap.keys.toList();
 
       setState(() {
@@ -458,10 +459,10 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
         _filteredCountries = uniqueCountries;
       });
     } catch (e) {
-      print("Error loading CSV file: $e");
+      print("Errore nel caricamento del file csv: $e");
     }
   }
-
+   //Inserisco i dati del file csv in una map che ha per chiavi le nazioni e come valori delle liste di città
   static Map<String, List<String>> _parseCSV(String rawData) {
     List<List<dynamic>> _listData = const CsvToListConverter().convert(rawData);
     Map<String, List<String>> dataMap = {};
@@ -509,9 +510,10 @@ class _CreateViaggioScreenState extends State<CreateViaggioScreen> {
         onStepTapped: (step) => setState(() => _activeStepIndex = step),
         onStepContinue: () {
           if (isLastStep) {
-            _check();
+            _check(); //se sono arrivato all'ultimo step faccio il check dei campi compilati
             setState(() => _activeStepIndex = 0);
           } else {
+            //altrimenti vado allo step successivo
             setState(() => _activeStepIndex += 1);
           }
         },

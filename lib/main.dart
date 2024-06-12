@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'Autenticazione/registerScreen.dart';
-import 'Autenticazione/completeRegister.dart';
-import 'Autenticazione/signIn.dart';
-import 'Autenticazione/signUp.dart';
-import 'homePage.dart';
-import 'DettagliViaggio.dart';
+import 'package:wefly/Authentication/registerScreen.dart';
+import 'package:wefly/Authentication/completeRegister.dart';
+import 'package:wefly/Authentication/signIn.dart';
+import 'package:wefly/Authentication/signUp.dart';
+import 'package:wefly/Main screens/homePage.dart';
+import 'package:wefly/Main screens/DettagliViaggio.dart';
 
 Future main() async{
 
@@ -39,7 +39,6 @@ class _MyAppState extends State<MyApp> {
   }
 
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         '/home': (context) => const homePage(),
         '/signUp': (context) => const SignUp(),
         '/signIn': (context) => const SignIn(),
-        '/registerScreen': (context) => const registerScreen(),
+        '/registerScreen': (context) => const RegisterScreen(),
         '/completeRegister': (context) => const completeRegister(),
         '/dettagliViaggio': (context) => const DettagliViaggio(),
       },

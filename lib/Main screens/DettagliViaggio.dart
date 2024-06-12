@@ -15,59 +15,50 @@ class DettagliViaggio extends StatelessWidget {
 
   Future<void> _partecipaAlViaggio(BuildContext context, String viaggioUid, List partecipanti) async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
-    if (partecipanti.contains(userId)) {
-      // Mostra un messaggio se l'utente è già un partecipante
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sei già un partecipante a questo viaggio!')),
-      );
-      return;
-    }
 
 
     try {
-      // Aggiungi l'ID dell'utente al campo "Partecipanti" del viaggio
+
       final database = FirebaseDatabase.instanceFor(
         app: Firebase.app(),
         databaseURL: "https://weflyflutter-default-rtdb.europe-west1.firebasedatabase.app",
       );
-
+      //prendo un riferimento al particolare viaggio selezionato
       DatabaseReference viaggioRef = database.ref().child('Viaggi').child(viaggioUid);
+      //prendo un riferimento all'utente
       DatabaseReference userRef = database.ref().child('users').child(userId);
+
+      //ottengo la lista dei viaggi a cui l'utente ha partecipato
       final snapshot = await userRef.child('viaggi').get();
-
       List<String> viaggiList = [];
-
       if (snapshot.exists) {
         List<dynamic> values = snapshot.value as List<dynamic>;
         viaggiList = values.cast<String>().toList();
       }
 
-      // Aggiungi l'UID del viaggio alla lista dei viaggi dell'utente
+      // Aggiungo l'UID del viaggio alla lista dei viaggi dell'utente
       if (!viaggiList.contains(viaggioUid)) {
         viaggiList.add(viaggioUid);
       }
       await userRef.update({'viaggi': viaggiList});
 
 
-
+      // Aggiungo l'ID dell'utente al campo "Partecipanti" del viaggio
       partecipanti.add(userId);
       await viaggioRef.update({'Partecipanti': partecipanti});
-
-      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Hai partecipato al viaggio!')),
       );
+      Navigator.pop(context); //una volta che l'utente ha partecipato al viaggio
+      //ritorno alla lista dei viaggi
+
     } catch (e) {
       print("errore: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore durante la partecipazione al viaggio: $e')),
-      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //final Map viaggio = ModalRoute.of(context)!.settings.arguments as Map;
     final Map args = ModalRoute.of(context)!.settings.arguments as Map;
     final Map viaggio = args['viaggio'];
     final String imageUrl = args['imageUrl'];
