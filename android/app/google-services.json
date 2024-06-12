@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903184275637",
+    "project_id": "weflyflutter",
+    "storage_bucket": "weflyflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903184275637:android:9316e46a3d6a95fd74c6fc",
+        "android_client_info": {
+          "package_name": "com.example.wefly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASFJjrlro25XCuzwMwgY0DK1bK7Y5SceU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
