@@ -67,47 +67,51 @@ class _SignUpState extends State<SignUp> {
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(18.0, 20.0, 18.0, 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildTextField(_nome, 'NOME'),
-                    SizedBox(height: 20),
-                    _buildTextField(_cognome, 'COGNOME'),
-                    SizedBox(height: 20),
-                    _buildTextField(_telefono, 'TELEFONO'),
-                    SizedBox(height: 20),
-                    _buildTextField(_email, 'EMAIL'),
-                    SizedBox(height: 20),
-                    _buildPasswordField(_password, 'PASSWORD'),
-                    SizedBox(height: 20),
-                    _buildPasswordField(_confPassword, 'CONFERMA PASSWORD'),
-                    SizedBox(height: 30),
-                    GestureDetector(
-                      onTap: () {
-                        _checkField();
-                      },
-                      child: Container(
-                        height: 55,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(colors: [
-                            Color(0xffd651f4),
-                            Color(0xff1c29e0),
-                          ]),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'CONTINUA',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.white),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20),
+                      _buildTextField(_nome, 'NOME'),
+                      SizedBox(height: 20),
+                      _buildTextField(_cognome, 'COGNOME'),
+                      SizedBox(height: 20),
+                      _buildTextField(_telefono, 'TELEFONO'),
+                      SizedBox(height: 20),
+                      _buildTextField(_email, 'EMAIL'),
+                      SizedBox(height: 20),
+                      _buildPasswordField(_password, 'PASSWORD'),
+                      SizedBox(height: 20),
+                      _buildPasswordField(_confPassword, 'CONFERMA PASSWORD'),
+                      SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: () {
+                          _checkField();
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(colors: [
+                              Color(0xffd651f4),
+                              Color(0xff1c29e0),
+                            ]),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'CONTINUA',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 30), // Spazio aggiuntivo per evitare overflow
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -116,6 +120,7 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
   Widget _buildPasswordField(TextEditingController controller, String label) {
     return TextField(
       controller: controller,
@@ -123,9 +128,8 @@ class _SignUpState extends State<SignUp> {
       style: TextStyle(color: Color(0xffd651f4)),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Color(0xffd651f4),
+        labelStyle: GoogleFonts.bebasNeue(
+          textStyle: TextStyle(color: Color(0xffd651f4)),
         ),
         suffixIcon: IconButton(
           icon: Icon(
@@ -141,32 +145,28 @@ class _SignUpState extends State<SignUp> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Color(0xffd651f4)),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xffd651f4)),
-        ),
+        border: OutlineInputBorder(),
       ),
     );
   }
+
   Widget _buildTextField(TextEditingController controller, String label) {
     return TextField(
       controller: controller,
       style: TextStyle(color: Color(0xffd651f4)),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Color(0xffd651f4),
+        labelStyle: GoogleFonts.bebasNeue(
+          textStyle: TextStyle(color: Color(0xffd651f4)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Color(0xffd651f4)),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xffd651f4)),
-        ),
+        border: OutlineInputBorder(),
       ),
     );
   }
-  
+
   void showToastMessage(String message) => Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_LONG,
@@ -174,6 +174,7 @@ class _SignUpState extends State<SignUp> {
     textColor: Colors.white,
     fontSize: 16.0,
   );
+
   void _checkField() {
     String nome = _nome.text.trim();
     String cognome = _cognome.text.trim();
@@ -182,7 +183,12 @@ class _SignUpState extends State<SignUp> {
     String password = _password.text.trim();
     String confPassword = _confPassword.text.trim();
 
-    if (nome.isEmpty || cognome.isEmpty || telefono.isEmpty|| email.isEmpty || password.isEmpty || confPassword.isEmpty) {
+    if (nome.isEmpty ||
+        cognome.isEmpty ||
+        telefono.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confPassword.isEmpty) {
       showToastMessage("Tutti i campi sono obbligatori.");
       return;
     }
@@ -204,7 +210,12 @@ class _SignUpState extends State<SignUp> {
     Navigator.pushNamed(
       context,
       '/completeRegister',
-      arguments: UserData(nome: nome, cognome: cognome, email: email, password: password,telefono:telefono)
+      arguments: UserData(
+          nome: nome,
+          cognome: cognome,
+          email: email,
+          password: password,
+          telefono: telefono),
     );
   }
 }
