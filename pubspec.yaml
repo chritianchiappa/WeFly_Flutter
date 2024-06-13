@@ -40,7 +40,6 @@ dependencies:
   firebase_database: ^11.0.0 #database
   firebase_storage: ^12.0.0 #storage per immagini
   fluttertoast: ^8.2.6 #toast
-  shared_preferences: ^2.2.3 #shared preferences
   google_nav_bar: ^5.0.6 #bottom nav bar
   line_icons: ^2.0.3 #icone
   google_fonts: ^6.2.1 #fonts
